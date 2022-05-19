@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "213506170399",
+    "project_id": "choriblogapp",
+    "storage_bucket": "choriblogapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213506170399:android:c3988183c7c890a2553f2a",
+        "android_client_info": {
+          "package_name": "com.example.choriblogapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "213506170399-3outat7ueve8q43g2s0v39qhim0oj0td.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCms1K3WSM1sBEFjAsFZSaOnZz3ZjcEVHk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "213506170399-3outat7ueve8q43g2s0v39qhim0oj0td.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
