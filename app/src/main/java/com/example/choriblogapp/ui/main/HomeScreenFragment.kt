@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.choriblogapp.R
-import com.example.choriblogapp.core.Resource
+import com.example.choriblogapp.core.Result
 import com.example.choriblogapp.data.remote.home.HomeScreenDataSource
 import com.example.choriblogapp.databinding.FragmentHomeScreenBinding
 import com.example.choriblogapp.domain.home.HomeScreenRepoImpl
@@ -39,14 +39,14 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
         binding = FragmentHomeScreenBinding.bind(view)
         viewModel.fetchLatestPosts().observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Resource.Loading -> {
+                is Result.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                 }
-                is Resource.Success -> {
+                is Result.Success -> {
                     binding.progressBar.visibility=View.GONE
                     binding.rvHome.adapter = HomeScreenAdapter(result.data)
                 }
-                is Resource.Failure -> {
+                is Result.Failure -> {
                     binding.progressBar.visibility=View.GONE
                     Toast.makeText(
                         requireContext(),
