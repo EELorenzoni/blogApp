@@ -14,16 +14,6 @@ import com.example.choriblogapp.presentation.HomeScreenViewModel
 import com.example.choriblogapp.presentation.HomeScreenViewModelFactory
 import com.example.choriblogapp.ui.main.adapters.HomeScreenAdapter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeScreenFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
     private lateinit var binding: FragmentHomeScreenBinding
     private val viewModel by viewModels<HomeScreenViewModel> {

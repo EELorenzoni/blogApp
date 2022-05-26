@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.ViewStructure
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -28,28 +29,32 @@ import com.google.firebase.storage.UploadTask
 import java.io.ByteArrayOutputStream
 import java.lang.RuntimeException
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private val hideDestinations: IntArray =
+        intArrayOf(R.id.loginFragment, R.id.loginFragment, R.id.setupProfileFragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
         observeDestinationChange()
     }
 
     private fun observeDestinationChange() {
         navController.addOnDestinationChangedListener { controller, destination, arguemnts ->
-            if (destination.id == R.id.loginFragment || destination.id == R.id.registerFragment) {
+
+            val hideMenu = hideDestinations.find { idFragment -> destination.id.equals(idFragment) }
+            if (hideMenu == null) {
                 binding.bottomNavigationView.hide()
             } else {
                 binding.bottomNavigationView.show()
