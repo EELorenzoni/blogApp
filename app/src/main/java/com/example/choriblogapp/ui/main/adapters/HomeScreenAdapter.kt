@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.choriblogapp.core.BaseViewHolder
+import com.example.choriblogapp.core.TimeUtils
 import com.example.choriblogapp.data.model.Post
 import com.example.choriblogapp.databinding.PostItemViewBinding
 
@@ -40,7 +41,9 @@ class HomeScreenAdapter(private val postList: List<Post>) :
             } else {
                 binding.postDescription.text = item.post_description
             }
-            binding.postTimestamp.text = "Hace 3 horas"
+            item.created_at?.let {
+                binding.postTimestamp.text = TimeUtils.getTimeAgo(it)
+            }
         }
     }
 }

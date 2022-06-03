@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private val hideDestinations: IntArray =
-        intArrayOf(R.id.loginFragment, R.id.loginFragment, R.id.setupProfileFragment)
+        intArrayOf(R.id.loginFragment, R.id.registerFragment, R.id.setupProfileFragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguemnts ->
 
             val hideMenu = hideDestinations.find { idFragment -> destination.id.equals(idFragment) }
-            if (hideMenu == null) {
+            if (hideMenu != null) {
                 binding.bottomNavigationView.hide()
             } else {
                 binding.bottomNavigationView.show()
