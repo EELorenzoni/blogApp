@@ -16,14 +16,25 @@ class HomeScreenViewModel(private val repo: HomeScreenRepo) : ViewModel() {
 
         kotlin.runCatching {
             repo.getLatestPosts()
-        }.onSuccess { flowList ->
-            flowList.collect {
-                emit(it)
-            }
+        }.onSuccess { postList ->
+            emit(postList)
         }.onFailure {
             emit(Result.Failure(Exception(it.message)))
         }
     }
+
+    fun registerLikeButtonState(postId: String, liked: Boolean) =
+        liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
+            emit(Result.Loading())
+            kotlin.runCatching {
+                repo.registerLikeButtonState(postId, liked)
+            }.onSuccess {
+                emit(Result.Success(Unit))
+            }.onFailure {
+                emit(Result.Failure(Exception(it.message)))
+            }
+        }
+
 }
 
 class HomeScreenViewModelFactory(private val repo: HomeScreenRepo) : ViewModelProvider.Factory {

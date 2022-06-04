@@ -1,7 +1,7 @@
-package com.example.choriblogapp.ui.main
+package com.example.choriblogapp.ui.home
 
-import android.os.Binder
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
@@ -10,14 +10,16 @@ import com.example.choriblogapp.R
 import com.example.choriblogapp.core.Result
 import com.example.choriblogapp.core.hide
 import com.example.choriblogapp.core.show
+import com.example.choriblogapp.data.model.Post
 import com.example.choriblogapp.data.remote.home.HomeScreenDataSource
 import com.example.choriblogapp.databinding.FragmentHomeScreenBinding
 import com.example.choriblogapp.domain.home.HomeScreenRepoImpl
 import com.example.choriblogapp.presentation.HomeScreenViewModel
 import com.example.choriblogapp.presentation.HomeScreenViewModelFactory
-import com.example.choriblogapp.ui.main.adapters.HomeScreenAdapter
+import com.example.choriblogapp.ui.home.adapters.HomeScreenAdapter
+import com.example.choriblogapp.ui.home.adapters.OnPostClickListener
 
-class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
+class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickListener {
     private lateinit var binding: FragmentHomeScreenBinding
     private val viewModel by viewModels<HomeScreenViewModel> {
         HomeScreenViewModelFactory(
@@ -43,7 +45,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
                     } else {
                         binding.emptyContainer.hide()
                     }
-                    binding.rvHome.adapter = HomeScreenAdapter(result.data)
+                    binding.rvHome.adapter = HomeScreenAdapter(result.data, this)
                 }
                 is Result.Failure -> {
                     binding.progressBar.hide()
@@ -56,5 +58,25 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
             }
         }
 //        binding.rvHome.adapter = HomeScreenAdapter(postList)
+    }
+
+    override fun onLikeButtonClick(post: Post, liked: Boolean) {
+        viewModel.registerLikeButtonState(post.id, liked).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    Log.d("Like Transaction", "in progress.....")
+                }
+                is Result.Success -> {
+                    Log.d("Like Transaction", "Success")
+                }
+                is Result.Failure -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Ocurrio un error: ${result.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 }
